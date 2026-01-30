@@ -1,0 +1,92 @@
+html,
+body {
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  flex-direction: column;
+}
+#my-form {
+  width: 750px;
+  height: 230px;
+  background-color: black;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+#my-form #submit-div {
+  display: flex;
+}
+#my-form #url-input {
+  width: 200px;
+  font-size: 18px;
+
+  padding: 10px 16px;
+  border: 1px solid #bbb;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+}
+
+#my-form button {
+  width: 100%;
+  background-color: #2c87c5;
+  outline: none;
+  border: none;
+  color: white;
+  padding: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-family: lato, arial;
+  text-transform: capitalize;
+
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+.short-link-a {
+  text-decoration: none;
+  color: blue;
+}
+.short-link-a:hover {
+  text-decoration: underline;
+}
+#a-div {
+  display: flex;
+  justify-content: flex-start;
+
+  flex-direction: column;
+}
+.display-error-div {
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  border-radius: 8px;
+
+  width: 500px;
+  padding: 12px 16px;
+  font-size: 16px;
+  margin-bottom: 24px;
+  background-color: rgb(254 226 226);
+  color: rgb(185, 28, 28);
+  border: rgb(248, 113, 113) 1px solid;
+}
+
+.error-div-green {
+  background-color: rgb(91, 240, 54);
+
+  color: aquamarine;
+  border: rgb(59, 155, 32) 1px solid;
+}
+.error-p {
+  text-transform: capitalize;
+}
+h1,
+p {
+  margin: 0;
+}
+.bad-or-good-p {
+  text-transform: capitalize;
+  font-weight: 700;
+}
