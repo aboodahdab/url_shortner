@@ -1,8 +1,9 @@
 from flask import redirect, Flask, render_template, request, jsonify
-from main import get_url, find_short_link
+from main import get_url, find_short_link, find_link, delete_something, update_all_caches
 from dotenv import load_dotenv
 import requests
 import os
+from datetime import datetime
 load_dotenv()
 
 app = Flask(__name__, template_folder="../frontend/temps",
@@ -26,6 +27,16 @@ def check_url():
             json_data = request.get_json()
             url = json_data.get("url")
             print(url)
+            link = find_link(url)
+            print("no link", link)
+            if link:
+                cached_until = link["cached_until"]
+                link_unique_id = link["shortned_url_id"]
+                if cached_until > datetime.now():
+
+                    return jsonify({"status": "success", "message": "successfly checked the url and the  url is not malicious and operation was a success"}), 200
+
+            print("for a reason we called the api")
             apiUrl = f"https://safebrowsing.googleapis.com/v4/threatMatches:find?key={GOOGLE_CHECK_API_KEY}"
             body_json = {
                 "client": {
@@ -44,15 +55,19 @@ def check_url():
 
             r = requests.post(apiUrl, json=body_json)
             jsoned_r = r.json()
+
             print(r.status_code)
             print(jsoned_r)
             wanted_key = "matches"
             if wanted_key in jsoned_r:
+                # cache_duration=jsoned_r[wanted_key][0]["cacheDuration"]
+                # print(cache_duration)
                 print("maliciuos you big cat")
 
                 return jsonify({"status": "fail", "message": "url contains malicious content"}), 404
+            update_all_caches(url)
 
-            return jsonify({"status": "success", "message": "successfly url is not malicious and operation was a success"}), 200
+            return jsonify({"status": "success", "message": "successfly checked the url and the  url is not malicious and operation was a success"}), 200
         return jsonify({"status": "fail", "message": "request is not json"}), 415
 #  flask supportes 405 error code
     return jsonify({"status": "fail", "message": "method is not POST"})
@@ -74,7 +89,7 @@ def check_if_url_is_reachable(timeout=5):
                 print("request exceptoin ", e)
                 return jsonify({"status": "fail", "message": "url is unreachable "}), 404
             except Exception as e:
-                print("error server internal ",e)
+                print("error server internal ", e)
                 return jsonify({"status": "fail", "message": "server internal error "}), 500
 
 
@@ -86,7 +101,10 @@ def get_sended_url():
             data = request.get_json()
             print(data)
             url = data["url"]
-            unique_id = get_url(url, SHORT_URL_LENGTH)
+            print(url, "send data url")
+            # this returns the milliseconds in 3 days (cache_duration)
+            cache_duration = 3
+            unique_id = get_url(url, SHORT_URL_LENGTH, cache_duration)
             print(unique_id)
             return jsonify({"status": "success", "message": "successfly got the url", "unique_url_id": unique_id}), 200
         return jsonify({"status": "fail", "message": "request is not json"}), 415
