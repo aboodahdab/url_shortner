@@ -1,7 +1,7 @@
 # url_shortner
 #### Just a Url Shortner In Python
 ## How To Run: 
-### Go To Backend `cd backend`
+### First Go To Backend `cd backend`
 ### Then Make a Virtual Envirmoent `python3 -m venv env`
 ### Next Activate It With  `source env/bin/activate`
 ### After That Download The Required Libraries `pip install -r requirements.txt`
