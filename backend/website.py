@@ -16,8 +16,8 @@ SHORT_URL_LENGTH = 8
 
 @app.route("/", methods=["GET"])
 def homepage():
-
-    return render_template("homepage.html", file="homepage.js", css_file="css_statics/homepage_style.css")
+    # This is just for a css file if you want to put it in this line and add a comma before it css_file="css_statics/homepage_style.css"
+    return render_template("homepage.html", file="homepage.js", tailwind_css="tailwind css", )
 
 
 @app.route("/check_url", methods=["POST"])
