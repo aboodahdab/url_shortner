@@ -198,6 +198,22 @@ $copyBtn.addEventListener("click", () => {
   }
 });
 $submitButton.addEventListener("click", async (e) => {
+  let offline = false;
+  addEventListener("offline", (event) => {
+    offline = true;
+    showTheError(
+      "No internet connection!",
+      "Please connect to internet to continue",
+    );
+  });
+  addEventListener("online", (event) => {
+    offline = false;
+
+    ShowTheVerfication();
+  });
+  if (offline) {
+    return;
+  }
   e.preventDefault();
   if (isTheWebsiteShown) {
     // Reset to create a new short URL
